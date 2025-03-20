@@ -1,0 +1,7 @@
+roll_dice(num_rolls, dice=six_sided)
+
+free_bacon(score)
+
+take_turn(num_rolls, opponent_score, dice=six_sided)
+
+extra_turn(player_score, opponent_score)
