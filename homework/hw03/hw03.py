@@ -203,6 +203,12 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
+    value_root = label(t)
+    if is_leaf(t):
+        return [value_root]    
+    else:
+        new_branches = [preorder(b) for b in branches(t)]
+        return [value_root] + sum(new_branches, [])
 
 
 def has_path(t, word):
@@ -235,6 +241,15 @@ def has_path(t, word):
     """
     assert len(word) > 0, 'no path for empty word.'
     "*** YOUR CODE HERE ***"
+    if len(word) == 1:
+        return label(t) == word
+    if label(t) != word[0]:
+        return False
+    for b in branches(t):
+        if has_path(b, word[1:]):
+            return True
+    return False
+    
 
 
 def interval(a, b):
