@@ -44,11 +44,13 @@ def planet(size):
     """Construct a planet of some size."""
     assert size > 0
     "*** YOUR CODE HERE ***"
+    return ['planet', size]
 
 def size(w):
     """Select the size of a planet."""
     assert is_planet(w), 'must call size on a planet'
     "*** YOUR CODE HERE ***"
+    return w[1]
 
 def is_planet(w):
     """Whether w is a planet."""
@@ -105,7 +107,10 @@ def balanced(m):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    if length(left(m)) * total_weight(end(left(m))) == length(right(m)) * total_weight(end(right(m))):
+        return True
+    else:
+        return False
 def totals_tree(m):
     """Return a tree representing the mobile with its total weight at the root.
 
@@ -136,6 +141,14 @@ def totals_tree(m):
     True
     """
     "*** YOUR CODE HERE ***"
+    if is_planet(m):
+        return tree(total_weight(m))    
+    weight = total_weight(m)
+    left_branch = totals_tree(end(left(m)))
+    right_branch = totals_tree(end(right(m)))
+    M_tree = tree(weight, [left_branch,right_branch])
+    return M_tree
+    
 
 
 def replace_leaf(t, find_value, replace_value):
@@ -168,7 +181,16 @@ def replace_leaf(t, find_value, replace_value):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    
+    if is_leaf(t):
+        if label(t) == find_value:
+            return tree(replace_value)
+        else:
+            return tree(label(t))
+    else:
+        new_branches = [replace_leaf(b, find_value, replace_value) for b in branches(t)]
+        return tree(label(t), new_branches)
+    
 
 def preorder(t):
     """Return a list of the entries in this tree in the order that they
